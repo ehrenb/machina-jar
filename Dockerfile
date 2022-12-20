@@ -7,4 +7,6 @@ RUN pip3 install --trusted-host pypi.org \
                 -r /tmp/requirements.txt
 RUN rm /tmp/requirements.txt
 
+COPY JarAnalyzer.json /schemas/
+
 COPY src /machina/src
