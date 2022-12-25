@@ -6,6 +6,7 @@ from machina.core.worker import Worker
 
 class JarAnalyzer(Worker):
     types = ["jar"]
+    next_queues = ['Identifier']
 
     def __init__(self, *args, **kwargs):
         super(JarAnalyzer, self).__init__(*args, **kwargs)
@@ -36,9 +37,6 @@ class JarAnalyzer(Worker):
                         "type": data['type']},
                     'type': 'apk'}
 
-            channel = self.get_channel(self.config['rabbitmq'])
-            channel.basic_publish(exchange='machina',
-                routing_key='Identifier',
-                body=json.dumps(body))
+            self.publish_next(json.dumps(body))
         else:
             pass
