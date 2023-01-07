@@ -21,11 +21,11 @@ class JarAnalyzer(Worker):
         zf = ZipFile(target)
         namelist = zf.namelist()
 
-        # Retype as APK
+        # Submit to retype as APK
         if 'classes.dex' in namelist and 'META-INF/MANIFEST.MF' in namelist:
             # retype (Submit original data to Identifier with origin metadata and 
             # new  type)
-            self.logger.info(f"retyping {target} to apk")
+            self.logger.info(f"resubmitting to retype {target} to apk")
             with open(target, 'rb') as f:
                 data_encoded = base64.b64encode(f.read()).decode()
             body = {
@@ -33,7 +33,7 @@ class JarAnalyzer(Worker):
                     "origin": {
                         "ts": data['ts'],
                         "md5": data['hashes']['md5'],
-                        "id": data['id'], #I think this is the only field needed, we can grab the unique node based on id alone
+                        "uid": data['uid'], #I think this is the only field needed, we can grab the unique node based on id alone
                         "type": data['type']},
                     'type': 'apk'}
 
