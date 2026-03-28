@@ -15,7 +15,7 @@ class JarAnalyzer(Worker):
         data = json.loads(data)
 
         # resolve path
-        target = self.get_binary_path(data['ts'], data['hashes']['md5'])
+        target = self.get_binary_path(data['ts'], data['hashes']['md5'], data['type'])
         self.logger.info(f"resolved path: {target}")
     
         zf = ZipFile(target)
